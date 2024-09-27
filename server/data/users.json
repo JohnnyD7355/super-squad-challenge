@@ -1,9 +1,16 @@
 [
   {
-    "name": "a",
-    "email": "a@a.com",
-    "messages": [
-      "a"
+    "name": "",
+    "email": "",
+    "power": [
+      ""
+    ]
+  },
+  {
+    "name": "skibiei",
+    "email": "jdang384@west-mec.org",
+    "powers": [
+      "qsq"
     ]
   }
 ]

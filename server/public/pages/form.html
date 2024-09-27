@@ -3,44 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Form</title>
+    <title>Hero Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sofadi+One&display=swap" rel="stylesheet">
+
+    <style>
+      body{
+        background-color: #89CFF0;
+        font-family: "Sofadi One";
+        font-size: 1.2rem;
+      }
+      button {
+        border-radius: 30px;
+      }
+      input {
+        border-radius: 30px;
+      }
+      #usersTable {
+        padding: 2rem;
+      }
+    </style>
   </head>
+  
   <body>
-    <h1>Contact Form</h1>
+    <h1>Hero Form</h1>
     <form action="/submit-form" method="POST">
-      <label for="name">Name:</label>
+      <label for="name">Hero:</label>
       <input type="text" id="name" name="name" required /><br /><br />
-      <label for="email">Email:</label>
+      <label for="email">Hero Email:</label>
       <input type="email" id="email" name="email" required /><br /><br />
-      <label for="message">Message:</label><br />
+       <label for="universe">Hero Universe:</label>
+       <input type="text" id="universe" name="universe" required /><br /><br />
+
+      <label for="power">Power:</label><br />
       <textarea
-        id="message"
-        name="message"
+        id="power"
+        name="power"
         rows="4"
         cols="50"
         required
       ></textarea
       ><br /><br />
+
       <input type="submit" value="Submit" />
     </form>
-    <h1>User Management</h1>
+    <h1>Hero Management</h1>
     <form id="updateForm">
-      <label for="currentName">Current name:</label>
+      <label for="currentName">Current Hero:</label>
       <input type="text" id="currentName" required /><br /><br />
-      <label for="currentEmail">Current email:</label>
+      <label for="currentEmail">Current Email:</label>
       <input type="email" id="currentEmail" required /><br /><br />
-      <label for="newName">New name:</label>
+      <label for="newName">New Hero:</label>
       <input type="text" id="newName" required /><br /><br />
-      <label for="newEmail">New email:</label>
+      <label for="newUniverse">New Universe:</label>
+      <input type="text" id="newUniverse" required /><br /><br />
+       <label for="newPower">New Power:</label>
+      <input type="text" id="newPower" required /><br /><br />
+
+      <label for="newEmail">New Email:</label>
       <input type="email" id="newEmail" required /><br /><br />
-      <button type="submit">Update User</button>
+      <button type="submit">Update Hero</button>
     </form>
-    <h1>Show Users</h1>
+    <h1>Show Heroes</h1>
     <table id="usersTable">
       <thead>
         <tr>
-          <th>User Name</th>
-          <th>User Email</th>
+          <th>Hero Name</th>
+          <th>Hero Email</th>
+          <th>Hero Powers</th>
+          <th>Hero Universe</th>
         </tr>
       </thead>
       <tbody id="userTableBody">
@@ -52,11 +84,16 @@
         .getElementById("updateForm")
         .addEventListener("submit", async (e) => {
           e.preventDefault();
+          console.log("hello")
           const currentName = document.getElementById("currentName").value;
           const currentEmail = document.getElementById("currentEmail").value;
           const newName = document.getElementById("newName").value;
           const newEmail = document.getElementById("newEmail").value;
+          const newUniverse = document.getElementById("newUniverse").value;
+          const newPower = document.getElementById("newPower").value;
+          console.log(currentName)
           try {
+            console.log("inside try");
             const response = await fetch(
               `/update-user/${currentName}/${currentEmail}`,
               {
@@ -64,7 +101,7 @@
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ newName, newEmail }),
+                body: JSON.stringify({ newName, newUniverse, newPower, newEmail }),
               }
             );
             const data = await response.json();
@@ -100,7 +137,7 @@
           const users = await fetchUsers();
           if (Array.isArray(users) && users.length > 0) {
             users.forEach((user) => {
-              const row = `<tr><td>${user.name}</td><td>${user.email}</td></tr>`;
+              const row = `<tr><td>${user.name}</td><td>${user.email}</td><td>${user.powers}</td><td>${user.universe}</td></tr>`;
               tableBody.innerHTML += row;
             });
           }

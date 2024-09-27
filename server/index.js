@@ -9,7 +9,7 @@ const app = express();
 
 // Define paths
 const clientPath = path.join(__dirname, '..', 'client/src');
-const dataPath = path.join(__dirname, 'data', 'users.json');
+const dataPath = path.join(__dirname, 'data', 'superheroes.json');
 const serverPublic = path.join(__dirname, 'public');
 // Middleware setup
 app.use(express.static(clientPath)); // Serve static files from client directory
@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/users', async (req, res) => {
+    console.log('hello from /users')
     try {
         const data = await fs.readFile(dataPath, 'utf8');
 
@@ -46,7 +47,7 @@ app.get('/form', (req, res) => {
 // Form submission route
 app.post('/submit-form', async (req, res) => {
     try {
-        const { name, email, message } = req.body;
+        const { name, email, power, universe } = req.body;
 
         // Read existing users from file
         let users = [];
@@ -62,9 +63,9 @@ app.post('/submit-form', async (req, res) => {
         // Find or create user
         let user = users.find(u => u.name === name && u.email === email);
         if (user) {
-            user.messages.push(message);
+            user.powers.push(power);
         } else {
-            user = { name, email, messages: [message] };
+            user = { name, email, powers: [power], universe };
             users.push(user);
         }
 
@@ -79,11 +80,12 @@ app.post('/submit-form', async (req, res) => {
 
 // Update user route (currently just logs and sends a response)
 app.put('/update-user/:currentName/:currentEmail', async (req, res) => {
+    console.log('hello')
     try {
-        const { currentName, currentEmail } = req.params;
-        const { newName, newEmail } = req.body;
+        const { currentName, currentEmail, } = req.params;
+        const { newName, newUniverse, newPower, newEmail } = req.body;
         console.log('Current user:', { currentName, currentEmail });
-        console.log('New user data:', { newName, newEmail });
+        console.log('New user data:', { newName, newEmail, newPower, newUniverse });
         const data = await fs.readFile(dataPath, 'utf8');
         if (data) {
             let users = JSON.parse(data);
@@ -92,7 +94,7 @@ app.put('/update-user/:currentName/:currentEmail', async (req, res) => {
             if (userIndex === -1) {
                 return res.status(404).json({ message: "User not found" })
             }
-            users[userIndex] = { ...users[userIndex], name: newName, email: newEmail };
+            users[userIndex] = { ...users[userIndex], name: newName, email: newEmail, powers: [newPower], universe: newUniverse };
             console.log(users);
             await fs.writeFile(dataPath, JSON.stringify(users, null, 2));
 
