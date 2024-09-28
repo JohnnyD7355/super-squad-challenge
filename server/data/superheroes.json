@@ -1,35 +1,10 @@
 [
   {
-    "name": "All Might",
-    "email": "AllMight@UA.org",
-    "universe": "My Hero Academia",
+    "name": "Deku",
+    "email": "Deku@UA.org",
+    "universe": "MHA",
     "powers": [
-      "One For All"
-    ]
-  },
-  {
-    "name": "dang",
-    "email": "dang@gmail.com",
-    "powers": [
-      "jump",
       "jump"
-    ],
-    "universe": "earth"
-  },
-  {
-    "name": "lmao",
-    "email": "lmao@gmail.com",
-    "powers": [
-      null
-    ],
-    "universe": "lol"
-  },
-  {
-    "name": "c",
-    "email": "c@c.com",
-    "powers": [
-      "c"
-    ],
-    "universe": "c"
+    ]
   }
 ]
